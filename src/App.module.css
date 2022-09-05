@@ -1,3 +1,11 @@
-.header {
-  color: red;
+.wrapper {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justiy-content: center;
+  align-items: center;
 }
