@@ -1,7 +1,8 @@
 form {
   margin-top: calc(0px - 1rem - 6px);
-  width: 100%;
+  margin-bottom: 1.5rem;
 
+  width: 100%;
   display: flex;
   gap: .5rem;
 }

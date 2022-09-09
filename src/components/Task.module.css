@@ -1,20 +1,5 @@
-.taskBox header {
+.taskBox {
   width: 100%;
-  display: flex;
-  jsutify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-.taskBox header .tarefas {
-  color: var(--blue);
-}
-.taskBox header .concluidas {
-  color: var(--purple);
-}
-.taskBox header .tarefas span , .taskBox header .concluidas span {
-  color: var(--white);
-  padding: .125rem .5rem;
-  border-radius: 999px;
-  background: var(--gray-500);
 }
 .container {
   display: block;
@@ -52,9 +37,13 @@
   background-color: var(--purple);
   border: none;
 }
+.container input:checked ~ p {
+  text-decoration: line-through;
+}
 
 .taskList {
   width: 100%;
+  margin-top: 1.5rem;
 
   display: flex;
   justify-content: space-between;
@@ -65,7 +54,6 @@
   background: var(--gray-500);
   padding: 1rem;
   border-radius: 8px;
-
 }
 
 .taskList label {
