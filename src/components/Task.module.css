@@ -1,3 +1,40 @@
+form {
+  margin-top: calc(0px - 1rem - 6px);
+  margin-bottom: 1.5rem;
+
+  width: 100%;
+  display: flex;
+  gap: .5rem;
+}
+
+input.searchBar[type="text"] {
+  color: var(--white);
+  background: var(--gray-500);
+  width:100%;
+  padding: 1rem;
+
+  border: 1px solid var(--gray-900);
+  border-radius: 8px;
+
+}
+form button {
+  padding: 1rem;
+  background: var(--blue);
+  border:none;
+  border-radius: 8px;
+  color: var(--white);
+
+  display: flex;
+  gap: .5rem;
+
+  transition: .2s;
+}
+form button:hover {
+  background: var(--purple);
+  cursor: pointer;
+}
+
+
 .taskBox {
   width: 100%;
 }

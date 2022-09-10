@@ -1,29 +1,95 @@
 import styles from './Task.module.css'
+import { PlusCircle, TrashSimple } from 'phosphor-react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
-import { TrashSimple } from 'phosphor-react'
+import { TaskHeader } from './TaskHeader'
+import { v4 as uuidv4 } from 'uuid';
 
 
-interface TaskProps {
-  id: string;
-  isChecked: boolean;
-  content: string;
-}
+const tasks = [
+  {
+    id: uuidv4() ,
+    isChecked: false,
+    content: 'Tarefa 1'
+  }, 
+]
 
-export function Task({ id, isChecked, content }:TaskProps){
-  return (
-    <div className={styles.taskBox}>
-      <div className={styles.taskList}>
-        <label className={styles.container}>
-          <input type="checkbox" />
-          <span className={styles.checkMark} />
-          <p>{content}</p>
-        </label>
-        <button>
-          <TrashSimple size={24} />
-        </button>
-      </div>
+export function Task(){
+
+   const [taskList, setTaskList] = useState(tasks); //inserir valor ao dar submit
+
+   const [newTaskText, setNewTaskText] = useState(''); //captar valor digitado
+
+ 
+   function handleCrateNewTask(event:FormEvent) {
+    event.preventDefault();
+
+    setTaskList([...taskList,   {id: uuidv4() , isChecked: false, content: newTaskText}]);
+  } 
+
+  function handleNewTaskChange(event:ChangeEvent<HTMLInputElement>){
+    event.target.setCustomValidity('');
+    setNewTaskText(event.target.value);
+  }
+
+  function handleToggleCheck(){
+    const id = event.target.id;
+    
+    const taskIndex = taskList.findIndex( task => {
+      return task.id  == id;
       
-    </div>
+    })
+    let tempTasks = [...taskList]
+    
+    tempTasks[taskIndex].isChecked = !tempTasks[taskIndex].isChecked;
 
+    setTaskList(tempTasks);
+
+    console.log(tempTasks);
+    console.log(taskIndex);
+    
+    
+    
+  }
+
+
+  return (
+    <>
+      <form onSubmit={handleCrateNewTask}>
+        <input 
+          type="text" 
+          placeholder="Adicione uma nova tarefa" 
+          className={styles.searchBar} 
+          onChange={handleNewTaskChange}
+        />
+        <button type='submit'>
+          Criar
+          <PlusCircle size={20} />
+        </button>
+      </form>
+
+      <TaskHeader 
+        completedTasks={1}
+        createdTasks ={taskList.length}
+      />
+
+      {taskList.map( task => {
+        return (
+          <div className={styles.taskBox}>
+          <div className={styles.taskList}>
+            <label className={styles.container}>
+              <input className='inputCheck' id={task.id} type="checkbox" onClick={handleToggleCheck} />
+              <span className={styles.checkMark} />
+              <p>{task.content}</p>
+            </label>
+            <button>
+              <TrashSimple size={24} />
+            </button>
+          </div>
+          
+        </div>
+        )
+      })}
+    </>
   )
 }
