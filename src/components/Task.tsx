@@ -20,6 +20,8 @@ export function Task(){
 
    const [newTaskText, setNewTaskText] = useState(''); //captar valor digitado
 
+   const [completedTasksCount, setCompletedTasksCount] = useState(0);
+
  
    function handleCrateNewTask(event:FormEvent) {
     event.preventDefault();
@@ -45,13 +47,18 @@ export function Task(){
 
     setTaskList(tempTasks);
 
-    console.log(tempTasks);
-    console.log(taskIndex);
-    
-    
+    countCheckedTasks();
+
+  }
+  function countCheckedTasks(){
+    let i=0;
+    taskList.map( task => {
+      return (task.isChecked ? i++ : '')
+    });
+    setCompletedTasksCount(i);
+    console.log(i);
     
   }
-
 
   return (
     <>
@@ -69,7 +76,7 @@ export function Task(){
       </form>
 
       <TaskHeader 
-        completedTasks={1}
+        completedTasks={completedTasksCount}
         createdTasks ={taskList.length}
       />
 
