@@ -1,6 +1,6 @@
 import styles from './Task.module.css'
 import { PlusCircle, TrashSimple } from 'phosphor-react'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, SyntheticEvent, useState } from 'react'
 
 import { TaskHeader } from './TaskHeader'
 import { v4 as uuidv4 } from 'uuid';
@@ -20,7 +20,7 @@ export function Task(){
 
    const [newTaskText, setNewTaskText] = useState(''); //captar valor digitado
 
-   const [completedTasksCount, setCompletedTasksCount] = useState(0);
+   const [completedTasksCount, setCompletedTasksCount] = useState(0); //contador das tasks concluidas
 
  
    function handleCrateNewTask(event:FormEvent) {
@@ -34,8 +34,8 @@ export function Task(){
     setNewTaskText(event.target.value);
   }
 
-  function handleToggleCheck(){
-    const id = event.target.id;
+  function handleToggleCheck(event:SyntheticEvent<HTMLInputElement>){
+    const id = (event.target as HTMLInputElement).id;
     
     const taskIndex = taskList.findIndex( task => {
       return task.id  == id;
@@ -48,18 +48,32 @@ export function Task(){
     setTaskList(tempTasks);
 
     countCheckedTasks();
-
   }
+
   function countCheckedTasks(){
     let i=0;
+
     taskList.map( task => {
       return (task.isChecked ? i++ : '')
     });
+
     setCompletedTasksCount(i);
-    console.log(i);
-    
   }
 
+  function handleRemoveTask(event:SyntheticEvent<HTMLButtonElement>) {
+    const idToRemove = event.currentTarget.id;
+
+    console.log(idToRemove);
+    
+    let removedTasks = taskList.filter( task => {
+      return (task.id != idToRemove);
+    });
+
+    setTaskList(removedTasks);
+
+    //console.log(removedTasks);
+    
+  }
   return (
     <>
       <form onSubmit={handleCrateNewTask}>
@@ -68,6 +82,7 @@ export function Task(){
           placeholder="Adicione uma nova tarefa" 
           className={styles.searchBar} 
           onChange={handleNewTaskChange}
+          required
         />
         <button type='submit'>
           Criar
@@ -85,11 +100,11 @@ export function Task(){
           <div className={styles.taskBox}>
           <div className={styles.taskList}>
             <label className={styles.container}>
-              <input className='inputCheck' id={task.id} type="checkbox" onClick={handleToggleCheck} />
+              <input id={task.id} type="checkbox" onClick={handleToggleCheck} />
               <span className={styles.checkMark} />
               <p>{task.content}</p>
             </label>
-            <button>
+            <button id={task.id} onClick={handleRemoveTask}>
               <TrashSimple size={24} />
             </button>
           </div>
