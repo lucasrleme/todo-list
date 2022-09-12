@@ -37,6 +37,7 @@ form button:hover {
 
 .taskBox {
   width: 100%;
+  overflow-wrap:anywhere;
 }
 .container {
   display: block;

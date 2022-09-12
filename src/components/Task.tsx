@@ -62,16 +62,12 @@ export function Task(){
 
   function handleRemoveTask(event:SyntheticEvent<HTMLButtonElement>) {
     const idToRemove = event.currentTarget.id;
-
-    console.log(idToRemove);
     
     let removedTasks = taskList.filter( task => {
       return (task.id != idToRemove);
     });
 
     setTaskList(removedTasks);
-
-    //console.log(removedTasks);
     
   }
   return (
